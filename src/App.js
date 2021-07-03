@@ -6,15 +6,15 @@ import About from "./Components/About";
 import Resume from "./Components/Resume";
 import Contact from "./Components/Contact";
 import Testimonials from "./Components/Testimonials";
-import Portfolio from "./Components/Portfolio";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import "./App.css";
 
 const App = () => {
-  const [resumeData, setResumeData] = useState({});
+  const [resumeData, setResumeData] = useState();
 
-  useEffect(() => {
-    fetch("/resumeData.json")
+  useEffect(async () => {
+    await fetch("/resumeData.json")
       .then((res) => res.json())
       .then((data) => {
         setResumeData(data);
@@ -22,15 +22,22 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <Header data={resumeData.main} />
-      <About data={resumeData.main} />
-      <Resume data={resumeData.resume} />
-      <Portfolio data={resumeData.portfolio} />
-      <Testimonials data={resumeData.testimonials} />
-      <Contact data={resumeData.main} />
-      <Footer data={resumeData.main} />
-    </div>
+    <React.Fragment className="center">
+      {resumeData != null ? (
+        <div className="App">
+          <Header data={resumeData.main} />
+          <About data={resumeData.main} />
+          <Resume data={resumeData.resume} />
+          <Testimonials data={resumeData.testimonials} />
+          <Contact data={resumeData.main} />
+          <Footer data={resumeData.main} />
+        </div>
+      ) : (
+        <div className="Modifying">
+          <PulseLoader size={100} color="blue" />
+        </div>
+      )}
+    </React.Fragment>
   );
 };
 
