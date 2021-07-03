@@ -13,8 +13,8 @@ import "./App.css";
 const App = () => {
   const [resumeData, setResumeData] = useState();
 
-  useEffect(async () => {
-    await fetch("/resumeData.json")
+  useEffect(() => {
+    fetch("/resumeData.json")
       .then((res) => res.json())
       .then((data) => {
         setResumeData(data);
